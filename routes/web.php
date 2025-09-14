@@ -14,16 +14,19 @@ Route::get('/resources', function () {
     return view('resources', [
         'resources' => [
             [
+                'id' => 1,
                 'title'=> 'mid term exam',
                 'subject' => 'math',
                 'grade' => '10',
             ],
             [
+                'id' => 2,
                 'title'=> 'final exam',
                 'subject' => 'biology',
                 'grade' => '11',
             ],
             [
+                'id' => 3,
                 'title'=> 'quiz 1',
                 'subject' => 'chemistry',
                 'grade' => '12',
@@ -31,6 +34,36 @@ Route::get('/resources', function () {
         ]
     ]);
 })->name('resources');
+
+Route::get('/resources/{id}', function ($id) {
+    $resources = [
+            [
+                'id' => 1,
+                'title'=> 'mid term exam',
+                'subject' => 'math',
+                'grade' => '10',
+            ],
+            [
+                'id' => 2,
+                'title'=> 'final exam',
+                'subject' => 'biology',
+                'grade' => '11',
+            ],
+            [
+                'id' => 3,
+                'title'=> 'quiz 1',
+                'subject' => 'chemistry',
+                'grade' => '12',
+            ]
+        ];
+
+
+        $resource = Arr::first($resources, fn($resource) => $resource['id'] == $id);
+    return view('resource', [
+        'resource' => $resource
+    ]);
+})->name('resource');
+
 
 Route::get('/contact', function () {
     return view('contact');
