@@ -9,9 +9,28 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+
+Route::get('/resources', function () {
+    return view('resources', [
+        'resources' => [
+            [
+                'title'=> 'mid term exam',
+                'subject' => 'math',
+                'grade' => '10',
+            ],
+            [
+                'title'=> 'final exam',
+                'subject' => 'biology',
+                'grade' => '11',
+            ],
+            [
+                'title'=> 'quiz 1',
+                'subject' => 'chemistry',
+                'grade' => '12',
+            ]
+        ]
+    ]);
+})->name('resources');
 
 Route::get('/contact', function () {
     return view('contact');
