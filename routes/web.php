@@ -23,7 +23,7 @@ Route::get('/resources', function () {
 })->name('resources');
 
 Route::get('/resources/{id}', function ($id) {
-        $resource = Arr::first(Resource::all(), fn($resource) => $resource['id'] == $id);
+    $resource = Resource::find($id);
     return view('resource', [
         'resource' => $resource
     ]);

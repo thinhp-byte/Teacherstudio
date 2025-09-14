@@ -4,7 +4,7 @@
   <ul>
    @foreach ($resources as $resource)
     <li>
-      <a href="/resources/">
+      <a href="/resources/{{ $resource['id']}}">
       <strong>{{ $resource['title']}}</strong> for {{$resource['subject']}} in {{$resource ['grade']}}th grade
     </li>
   @endforeach

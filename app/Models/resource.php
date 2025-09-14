@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Arr;
 
 class resource {
     public static function all(): array
@@ -25,5 +26,14 @@ class resource {
                 'grade' => '12',
             ]
             ];
+}
+
+public static function find (int $id): array
+{
+    $resource = Arr::first(static::all(), fn($resource) => $resource['id'] == $id);
+    if(!$resource) {
+        abort(404);
+    }
+    return $resource;
 }
 }
