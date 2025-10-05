@@ -9,4 +9,7 @@ class Collection extends Model
 {
     /** @use HasFactory<\Database\Factories\CollectionFactory> */
     use HasFactory;
+    public function resources(){
+        return $this->hasMany(Resource::class);
+    }
 }

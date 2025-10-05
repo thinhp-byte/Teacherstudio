@@ -9,4 +9,8 @@ class resource extends Model{
     use HasFactory;
  
     protected $fillable = ['title', 'subject', 'grade'];
+
+    public function collection(){
+        return $this->belongsTo(Collection::class);
+    }
 }
