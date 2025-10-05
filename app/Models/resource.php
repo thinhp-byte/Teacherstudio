@@ -13,4 +13,8 @@ class resource extends Model{
     public function collection(){
         return $this->belongsTo(Collection::class);
     }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
 }
