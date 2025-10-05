@@ -6,4 +6,5 @@ use Illuminate\Support\Arr;
 
 class resource extends Model{
  
+    protected $fillable = ['title', 'subject', 'grade'];
 }
