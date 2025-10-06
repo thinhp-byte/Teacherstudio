@@ -17,8 +17,9 @@ Route::get('/', function () {
 
 
 Route::get('/resources', function () {
+    $resources=resource::with("collection")->get();
     return view('resources', [
-        'resources' => Resource::all()
+        'resources' => $resources
     ]);
 })->name('resources');
 
