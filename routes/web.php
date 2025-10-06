@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/resources', function () {
-    $resources=resource::with("collection")->get();
+    $resources=resource::with("collection")->paginate(3);
     return view('resources', [
         'resources' => $resources
     ]);

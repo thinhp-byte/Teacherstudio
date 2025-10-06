@@ -11,5 +11,9 @@
       </div>      
         </a>
   @endforeach
+
+  <div>
+    {{ $resources->links() }}  
+    </div>
 </div>
 </x-layout>
