@@ -18,17 +18,24 @@ Route::get('/', function () {
 
 Route::get('/resources', function () {
     $resources=resource::with("collection")->simplepaginate(3);
-    return view('resources', [
+    return view('resources.index', [
         'resources' => $resources
     ]);
-})->name('resources');
+})->name('resources.index');
+
+
+Route::get('/resource/create', function () {
+    return view('resources.create');
+})->name('resource.create');
 
 Route::get('/resources/{id}', function ($id) {
     $resource = Resource::find($id);
-    return view('resource', [
+    return view('resources.show', [
         'resource' => $resource
     ]);
-})->name('resource');
+})->name('resource.show');
+
+
 
 
 Route::get('/contact', function () {
