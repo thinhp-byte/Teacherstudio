@@ -24,7 +24,7 @@ Route::get('/resources', function () {
 })->name('resources.index');
 
 
-Route::get('/resource/create', function () {
+Route::get('/resources/create', function () {
     return view('resources.create');
 })->name('resource.create');
 
