@@ -16,8 +16,12 @@
           <div class="mt-2">
             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
              
-              <input id="title" type="text" name="title" placeholder="Midterm Quiz" class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+              <input id="title" type="text" name="title" placeholder="Midterm Quiz" required class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
             </div>
+
+            @error('title')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
           </div>
         </div>
 
@@ -26,7 +30,11 @@
           <div class="mt-2">
             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
              
-              <input id="subject" type="text" name="subject" placeholder="Mathematics" class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+              <input id="subject" type="text" name="subject" placeholder="Mathematics" required class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+            
+              @error('subject')
+                  <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+              @enderror
             </div>
           </div>
         </div>
@@ -36,13 +44,25 @@
           <div class="mt-2">
             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
              
-              <input id="grade" type="text" name="grade" placeholder="5th" class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+              <input id="grade" type="text" name="grade" placeholder="5th" required class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+            
+              @error('grade')
+                  <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+              @enderror
             </div>
           </div>
         </div>
         
-
-       
+         {{-- <div class="mt-10">
+            @if ($errors->any())
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-red-500 text-xs">{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endif
+          </div>
+          --}}
       </div>
     </div>
 

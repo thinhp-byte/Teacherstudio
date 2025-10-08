@@ -36,7 +36,11 @@ Route::get('/resources/{id}', function ($id) {
 })->name('resource.show');
 
 Route::post('/resources', function(){
-   //validation
+   request()->validate([
+    'title'=>['required','min:3'],
+    'subject'=>'required',
+    'grade'=>'required'
+   ]);
 
    resource::create([
     'collection_id'=>1,
