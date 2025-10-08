@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class resource extends Model{
     use HasFactory;
  
-    protected $fillable = ['title', 'subject', 'grade'];
+    protected $fillable = ['collection_id', 'title', 'subject', 'grade'];
 
     public function collection(){
         return $this->belongsTo(Collection::class);

@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/resources', function () {
-    $resources=resource::with("collection")->simplepaginate(3);
+    $resources=resource::with("collection")->latest()->simplepaginate(3);
     return view('resources.index', [
         'resources' => $resources
     ]);
@@ -34,6 +34,18 @@ Route::get('/resources/{id}', function ($id) {
         'resource' => $resource
     ]);
 })->name('resource.show');
+
+Route::post('/resources', function(){
+   //validation
+
+   resource::create([
+    'collection_id'=>1,
+    'title'=>request('title'),
+    'subject'=>request('subject'),
+    'grade'=>request('grade')
+   ]);
+    return redirect('/resources');
+});
 
 
 
