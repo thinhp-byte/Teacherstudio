@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-
+//index
 Route::get('/resources', function () {
     $resources=resource::with("collection")->latest()->simplepaginate(3);
     return view('resources.index', [
@@ -23,11 +23,12 @@ Route::get('/resources', function () {
     ]);
 })->name('resources.index');
 
-
+//create
 Route::get('/resources/create', function () {
     return view('resources.create');
 })->name('resource.create');
 
+//show
 Route::get('/resources/{id}', function ($id) {
     $resource = Resource::find($id);
     return view('resources.show', [
@@ -35,6 +36,7 @@ Route::get('/resources/{id}', function ($id) {
     ]);
 })->name('resource.show');
 
+//store
 Route::post('/resources', function(){
    request()->validate([
     'title'=>['required','min:3'],
@@ -51,7 +53,12 @@ Route::post('/resources', function(){
     return redirect('/resources');
 });
 
-
+Route::get('/resources/{id}/edit', function ($id) {
+    $resource = Resource::find($id);
+    return view('resources.edit', [
+        'resource' => $resource
+    ]);
+})->name('resource.edit');
 
 
 Route::get('/contact', function () {
