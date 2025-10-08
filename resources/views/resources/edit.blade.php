@@ -3,8 +3,9 @@
 
 
   <p>
-   <form method="POST" action="/resources">
+   <form method="POST" action="/resources/{{$resource->id}}">
     @csrf
+    @method('PATCH')
   <div class="space-y-12">
     <div class="border-b border-gray-900/10 pb-12">
      <h2 class="text-base/7 font-semibold text-gray-900">Edit Resource: {{$resource->title}}</h2>
