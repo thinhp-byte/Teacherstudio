@@ -89,11 +89,26 @@
 
   </div>
 
-  <div class="mt-6 flex items-center justify-end gap-x-6">
-    <a href="/resources/{{$resource->id}}" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
-    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update</button>
-  </div>
+  <div class="mt-6 flex items-center justify-between gap-x-6">
+      <div class="flex items-center">
+          <button form="delete-form" class="text-red-500 text-sm font-bold">Delete</button>
+      </div>
+
+
+      <div class>
+  
+  
+  
+      <a href="/resources/{{$resource->id}}" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
+    
+    <div>
+      <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update</button>
+    </div>      
+    </div>
 </form>
 
+<form method="POST" action="/resources/{{$resource->id}}" id="delete-form" class="hidden">
+    @csrf
+    @method('DELETE')
 </p>
 </x-layout>
