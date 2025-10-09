@@ -3,8 +3,9 @@
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Http\Controllers\ResourceController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Resource;
+
 
 
 
@@ -16,71 +17,26 @@ Route::get('/', function () {
 })->name('home');
 
 //index
-Route::get('/resources', function () {
-    $resources=resource::with("collection")->latest()->simplepaginate(3);
-    return view('resources.index', [
-        'resources' => $resources
-    ]);
-})->name('resources.index');
+Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
 
 //create
-Route::get('/resources/create', function () {
-    return view('resources.create');
-})->name('resource.create');
+Route::get('/resources/create', [ResourceController::class, 'create'])->name('resource.create');
 
 //show
-Route::get('/resources/{resource}', function (Resource $resource) {
-    // $resource = Resource::find($id);
-    return view('resources.show', [
-        'resource' => $resource
-    ]);
-})->name('resource.show');
+Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resource.show');
+
 
 //store
-Route::post('/resources', function(){
-   request()->validate([
-    'title'=>['required','min:3'],
-    'subject'=>'required',
-    'grade'=>'required'
-   ]);
-
-   resource::create([
-    'collection_id'=>1,
-    'title'=>request('title'),
-    'subject'=>request('subject'),
-    'grade'=>request('grade')
-   ]);
-    return redirect('/resources');
-});
+Route::post('/resources', [ResourceController::class, 'store'])->name('resource.store');
 
 //edit
-Route::get('/resources/{resource}/edit', function (Resource $resource) {
-    return view('resources.edit', [
-        'resource' => $resource
-    ]);
-})->name('resource.edit');
+Route::get('/resources/{resource}/edit', [ResourceController::class, 'edit'])->name('resource.edit');
 
 //update
-Route::patch('/resources/{resource}', function (Resource $resource) {
-     request()->validate([
-    'title'=>['required','min:3'],
-    'subject'=>'required',
-    'grade'=>'required'
-   ]);
-
-    $resource->update([
-        'title'=>request('title'),
-        'subject'=>request('subject'),
-        'grade'=>request('grade')
-    ]);
-    return redirect('/resources/'.$resource->id);
-})->name('resource.update');
+Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->name('resource.update');
 
 //destroy
-Route::delete('/resources/{resource}', function (Resource $resource) {
-    $resource->delete();
-    return redirect('/resources');
-})->name('resource.delete');
+Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->name('resource.destroy');
 
 
 Route::get('/contact', function () {
