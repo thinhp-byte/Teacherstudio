@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+
+Route::view('/', 'home')->name('home');
 
 //index
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
@@ -39,9 +38,7 @@ Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->na
 Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->name('resource.destroy');
 
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::view('/contact', 'contact')->name('contact');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
