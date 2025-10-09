@@ -14,31 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::view('/', 'home')->name('home');
-
-//index
-Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
-
-//create
-Route::get('/resources/create', [ResourceController::class, 'create'])->name('resource.create');
-
-//show
-Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resource.show');
-
-
-//store
-Route::post('/resources', [ResourceController::class, 'store'])->name('resource.store');
-
-//edit
-Route::get('/resources/{resource}/edit', [ResourceController::class, 'edit'])->name('resource.edit');
-
-//update
-Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->name('resource.update');
-
-//destroy
-Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->name('resource.destroy');
-
-
 Route::view('/contact', 'contact')->name('contact');
+Route::resource('resource', ResourceController::class);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
