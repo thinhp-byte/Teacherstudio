@@ -29,8 +29,8 @@ Route::get('/resources/create', function () {
 })->name('resource.create');
 
 //show
-Route::get('/resources/{id}', function ($id) {
-    $resource = Resource::find($id);
+Route::get('/resources/{resource}', function (Resource $resource) {
+    // $resource = Resource::find($id);
     return view('resources.show', [
         'resource' => $resource
     ]);
@@ -54,32 +54,31 @@ Route::post('/resources', function(){
 });
 
 //edit
-Route::get('/resources/{id}/edit', function ($id) {
-    $resource = Resource::find($id);
+Route::get('/resources/{resource}/edit', function (Resource $resource) {
     return view('resources.edit', [
         'resource' => $resource
     ]);
 })->name('resource.edit');
 
 //update
-Route::patch('/resources/{id}', function ($id) {
+Route::patch('/resources/{resource}', function (Resource $resource) {
      request()->validate([
     'title'=>['required','min:3'],
     'subject'=>'required',
     'grade'=>'required'
    ]);
-    $resource=Resource::findOrFail($id);
+
     $resource->update([
         'title'=>request('title'),
         'subject'=>request('subject'),
         'grade'=>request('grade')
     ]);
-    return redirect('/resources/'.$id);
+    return redirect('/resources/'.$resource->id);
 })->name('resource.update');
 
 //destroy
-Route::delete('/resources/{id}', function ($id) {
-    Resource::find($id)->delete();
+Route::delete('/resources/{resource}', function (Resource $resource) {
+    $resource->delete();
     return redirect('/resources');
 })->name('resource.delete');
 
