@@ -11,42 +11,33 @@
       <p class="mt-1 text-sm/6 text-gray-600">Provide details here below</p>
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-4">
+        <x-form-field>
           <x-form-label for="title">Title</x-form-label>
           <div class="mt-2">
             <x-form-input id="title" name="title" placeholder="Midterm" required/>
 
             <x-form-error name="title"/>
           </div>
-        </div>
+        </x-form-field>
 
-        <div class="sm:col-span-4">
-          <label for="subject" class="block text-sm/6 font-medium text-gray-900">Subject</label>
+        <x-form-field>
+          <x-form-label for="title">Subject</x-form-label>
           <div class="mt-2">
-            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-             
-              <input id="subject" type="text" name="subject" placeholder="Mathematics" required class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
-            
-              @error('subject')
-                  <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-              @enderror
-            </div>
-          </div>
-        </div>
+            <x-form-input id="subject" name="subject" placeholder="Mathematics" required/>
 
-        <div class="sm:col-span-4">
-          <label for="grade" class="block text-sm/6 font-medium text-gray-900">Grade</label>
-          <div class="mt-2">
-            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-             
-              <input id="grade" type="text" name="grade" placeholder="5th" required class="block min-w-0 grow bg-white py-1.5 px-3 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
-            
-              @error('grade')
-                  <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-              @enderror
-            </div>
+            <x-form-error name="subject"/>
           </div>
-        </div>
+        </x-form-field>
+
+        <x-form-field>
+          <x-form-label for="title">Grade</x-form-label>
+          <div class="mt-2">
+            <x-form-input id="grade" name="grade" placeholder="5th" required/>
+
+            <x-form-error name="grade"/>
+          </div>
+        </x-form-field>
+
         
          {{-- <div class="mt-10">
             @if ($errors->any())
@@ -65,7 +56,7 @@
 
   <div class="mt-6 flex items-center justify-end gap-x-6">
     <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
-    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+    <x-form-button>Save</x-form-button>
   </div>
 </form>
 
