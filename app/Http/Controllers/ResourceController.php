@@ -5,7 +5,8 @@ use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResourcePosted;
 
 
 class ResourceController extends Controller
@@ -37,12 +38,16 @@ class ResourceController extends Controller
     'grade'=>'required'
    ]);
 
-   resource::create([
+   $resource = Resource::create([
     'collection_id'=>1,
     'title'=>request('title'),
     'subject'=>request('subject'),
     'grade'=>request('grade')
    ]);
+
+   Mail::to($resource->collection->user)->send(
+    new ResourcePosted($resource)
+);
     return redirect('/resources');
     }
 

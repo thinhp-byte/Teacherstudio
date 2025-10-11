@@ -1,10 +1,15 @@
 <x-mail::message>
-# Introduction
 
-The body of your message.
+<h2>{{ $resource->title }}
 
-<x-mail::button :url="''">
-Button Text
+</h2>
+<p>
+# Congrats! A new resource has been posted.
+</p>
+
+
+<x-mail::button :url="url('/resources/' . $resource->id)">
+View your Resource Post
 </x-mail::button>
 
 Thanks,<br>
