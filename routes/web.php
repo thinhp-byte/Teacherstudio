@@ -24,8 +24,8 @@ Route::post('/resources', [ResourceController::class, 'store'])->middleware('aut
 Route::get('/resources/{resource}', [ResourceController::class, 'show']);
 Route::get('/resources/{resource}/edit', [ResourceController::class, 'edit'])
     ->middleware('auth')
-    ->can('edit-resource', 'resource');
-    
+    ->can('edit', 'resource');
+
 Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->middleware('auth');
 Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->middleware('auth');
 
