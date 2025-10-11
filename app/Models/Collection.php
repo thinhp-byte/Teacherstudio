@@ -12,4 +12,8 @@ class Collection extends Model
     public function resources(){
         return $this->hasMany(Resource::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

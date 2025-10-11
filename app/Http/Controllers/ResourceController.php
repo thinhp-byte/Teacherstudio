@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
+
 
 class ResourceController extends Controller
 {
@@ -44,6 +48,12 @@ class ResourceController extends Controller
 
     public function edit(Resource $resource)
     {
+        
+   
+        
+       
+    
+        Gate::authorize('edit-resource', $resource);
         return view('resources.edit', [
         'resource' => $resource
     ]);
