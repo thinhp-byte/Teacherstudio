@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\User;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Collection>
  */
@@ -18,6 +18,7 @@ class CollectionFactory extends Factory
     {
         return [
             'name' =>fake()->word(),
+            'user_id' => User::factory()
         ];
     }
 }
