@@ -17,12 +17,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
-Route::resource('resources', ResourceController::class);
+
+Route::get('/resources', [ResourceController::class, 'index']);
+Route::get('/resources/create', [ResourceController::class, 'create'])->middleware('auth');
+Route::post('/resources', [ResourceController::class, 'store'])->middleware('auth');
+Route::get('/resources/{resource}', [ResourceController::class, 'show']);
+Route::get('/resources/{resource}/edit', [ResourceController::class, 'edit'])
+    ->middleware('auth')
+    ->can('edit-resource', 'resource');
+    
+Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->middleware('auth');
+Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->middleware('auth');
 
 // Auth
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
-Route::get('/login', [SessionController::class, 'create']);
+
+Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 

@@ -53,7 +53,7 @@ class ResourceController extends Controller
         
        
     
-        Gate::authorize('edit-resource', $resource);
+
         return view('resources.edit', [
         'resource' => $resource
     ]);
@@ -61,6 +61,7 @@ class ResourceController extends Controller
 
     public function update(Resource $resource)
     {
+        Gate::authorize('edit-resource', $resource);
         request()->validate([
     'title'=>['required','min:3'],
     'subject'=>'required',
@@ -77,6 +78,7 @@ class ResourceController extends Controller
 
     public function destroy(Resource $resource)
     {
+        Gate::authorize('edit-resource', $resource);
         $resource->delete();
     return redirect('/resources');
     }
