@@ -5,6 +5,7 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,8 @@ Route::resource('resources', ResourceController::class);
 
 // Auth
 Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::get('/login', [SessionController::class, 'create']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
