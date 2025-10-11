@@ -28,6 +28,7 @@ class ResourcePosted extends Mailable
     {
         return new Envelope(
             subject: 'Resource Posted',
+            from: 'vtporrmann@gmail.com'
         );
     }
 

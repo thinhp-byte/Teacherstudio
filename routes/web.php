@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+Route::get('test', function () {
+    \Illuminate\Support\Facades\Mail::to('thinh.porrmann@code.berlin')->send(new \App\Mail\ResourcePosted());
+    return 'Mail sent';
+});
 
 
 
