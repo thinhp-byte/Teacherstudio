@@ -3,15 +3,14 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
 use App\Models\Collection;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Resource>
  */
 class ResourceFactory extends Factory
 {
-    
     /**
      * Define the model's default state.
      *
@@ -19,22 +18,39 @@ class ResourceFactory extends Factory
      */
     public function definition(): array
     {
-         $user = User::has('teacherProfile')->inRandomOrder()->first();
+        $usersWithProfiles = User::has('teacherProfile')->pluck('id');
         
 
-        $collection = Collection::firstOrCreate(
-            [
-                'user_id' => $user->id,
-                'name' => $user->name . "'s Collection"
-            ]
-        );
+        if ($usersWithProfiles->isEmpty()) {
+            throw new \Exception('No users with teacher profiles found. Run DatabaseSeeder first!');
+        }
+    
 
-        $subjects = ['Mathematics', 'English', 'Science', 'History', 'Art', 'Music', 'PE', 'Geography'];
+        $userId = $usersWithProfiles->random();
+        
+        $collection = Collection::firstOrCreate(
+            ['user_id' => $userId],
+            ['name' => User::find($userId)->name . "'s Collection"]
+        );
+        
+        $subjects = [
+            'Mathematics', 
+            'English', 
+            'Science', 
+            'History', 
+            'Art', 
+            'Music', 
+            'PE', 
+            'Geography',
+            'Spanish',
+            'Computer Science'
+        ];
+        
         return [
+            'collection_id' => $collection->id,
             'title' => $this->faker->sentence(),
-            'subject' => $this->faker->word(),
+            'subject' => $this->faker->randomElement($subjects),
             'grade' => $this->faker->numberBetween(1, 12),
-            'collection_id' => \App\Models\Collection::factory(),
         ];
     }
 }
