@@ -22,6 +22,34 @@
                 </div>
             </div>
 
+            <!-- Follow Button Section -->
+            @auth
+                @if(auth()->id() !== $user->id)
+                    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                        @if(auth()->user()->isFollowing($user))
+                            <form method="POST" action="/users/{{ $user->id }}/unfollow" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
+                                    ✓ Following
+                                </button>
+                            </form>
+                        @else
+                            <form method="POST" action="/users/{{ $user->id }}/follow" class="inline">
+                                @csrf
+                                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                                    + Follow
+                                </button>
+                            </form>
+                        @endif
+                        
+                        <span class="ml-3 text-sm text-gray-600">
+                            {{ $user->followers()->count() }} followers
+                        </span>
+                    </div>
+                @endif
+            @endauth
+
             <!-- Profile Info -->
             <div class="px-6 py-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -45,9 +73,12 @@
                     @endif
                     
                     <div class="bg-gray-50 rounded-lg p-4">
-                        <div class="text-sm text-gray-500">Resources Shared</div>
+                        <div class="text-sm text-gray-500">Community</div>
                         <div class="text-lg font-semibold text-gray-900">
-                            {{ $user->collections()->count() }} collections
+                            {{ $user->followers()->count() }} followers
+                        </div>
+                        <div class="text-xs text-gray-600 mt-1">
+                            Following {{ $user->following()->count() }}
                         </div>
                     </div>
                 </div>
