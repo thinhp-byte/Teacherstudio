@@ -23,7 +23,8 @@
             >
               <option value="">Select a collection</option>
               @foreach(auth()->user()->collections as $collection)
-                <option value="{{ $collection->id }}" {{ old('collection_id') == $collection->id ? 'selected' : '' }}>
+                <option value="{{ $collection->id }}" 
+                  {{ (old('collection_id') == $collection->id || request('collection_id') == $collection->id) ? 'selected' : '' }}>
                   {{ $collection->name }} ({{ $collection->subject }})
                 </option>
               @endforeach
