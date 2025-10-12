@@ -4,7 +4,13 @@
         
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <nav>
+    
+    {{-- Success Messages --}}
+    @if(session('success'))
+        <div class="max-w-4xl w-full mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
             <x-nav-link href="/">Home</x-nav-link>
             <x-nav-link href="/resources">Resource Hub</x-nav-link>
             <x-nav-link href="/contact">Contact</x-nav-link>
