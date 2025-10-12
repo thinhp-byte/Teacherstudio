@@ -23,6 +23,10 @@
                 <a href="/resources" class="text-gray-900 hover:text-indigo-600 font-medium">Resource Hub</a>
                 <a href="/teachers" class="text-gray-900 hover:text-indigo-600 font-medium">Teachers</a>
 
+                @auth
+                    <x-nav-link href="/collections">My Collections</x-nav-link>
+                @endauth
+
                 <div class="ml-auto flex items-center gap-4">
                     @guest
                         <a href="/login" class="text-gray-900 hover:text-indigo-600">Log In</a>
