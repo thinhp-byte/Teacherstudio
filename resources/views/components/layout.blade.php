@@ -34,9 +34,14 @@
         
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8 flex sm:flex sm:justify-between">
-            <h1 class="text-3xl font-bold mb-8"> Teacherstudio </h1>
-            
-            <x-button href="/resources/create">Create Resource</x-button>
+                <h1 class="text-3xl font-bold mb-8"> Teacherstudio </h1>
+                
+                {{-- Only show Create Resource button on specific pages --}}
+                @auth
+                    @if(request()->is('/') || request()->is('resources') || request()->is('resources/*'))
+                        <x-button href="/resources/create">Create Resource</x-button>
+                    @endif
+                @endauth
             </div>
         </header>
 
