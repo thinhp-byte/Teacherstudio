@@ -1,7 +1,7 @@
 <x-layout>
     <div class="max-w-4xl mx-auto">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-            <!-- Header Section with Avatar -->
+            <!-- Header Section with Gradient Background -->
             <div style="background: linear-gradient(to right, #6366f1, #a855f7); padding: 48px 24px;">
                 <div style="display: flex; align-items: center;">
                     <!-- Avatar Circle -->
@@ -37,32 +37,43 @@
             </div>
 
             <!-- Follow Button Section -->
-            @auth
-                @if(auth()->id() !== $user->id)
-                    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                        @if(auth()->user()->isFollowing($user))
-                            <form method="POST" action="/users/{{ $user->id }}/unfollow" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
-                                    ✓ Following
-                                </button>
-                            </form>
-                        @else
-                            <form method="POST" action="/users/{{ $user->id }}/follow" class="inline">
-                                @csrf
-                                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-                                    + Follow
-                                </button>
-                            </form>
+            <div class="px-6 py-4 bg-white border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                    @auth
+                        {{-- Show follow/unfollow button only when viewing someone else's profile --}}
+                        @if(auth()->id() !== $user->id)
+                            @if(auth()->user()->isFollowing($user))
+                                {{-- Following button - Light purple/indigo, visible --}}
+                                <form method="POST" action="/users/{{ $user->id }}/unfollow" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 font-medium text-sm">
+                                        ✓ Following
+                                    </button>
+                                </form>
+                            @else
+                                {{-- Follow button - Darker indigo --}}
+                                <form method="POST" action="/users/{{ $user->id }}/follow" class="inline">
+                                    @csrf
+                                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-medium text-sm">
+                                        + Follow
+                                    </button>
+                                </form>
+                            @endif
+                            <span class="text-gray-400">•</span>
                         @endif
-                        
-                        <span class="ml-3 text-sm text-gray-600">
-                            {{ $user->followers()->count() }} followers
-                        </span>
-                    </div>
-                @endif
-            @endauth
+                    @endauth
+                    
+                    {{-- Always show follower counts --}}
+                    <span class="text-sm text-gray-700 font-medium">
+                        {{ $user->followers()->count() }} {{ $user->followers()->count() === 1 ? 'follower' : 'followers' }}
+                    </span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-sm text-gray-700 font-medium">
+                        Following {{ $user->following()->count() }}
+                    </span>
+                </div>
+            </div>
 
             <!-- Profile Info -->
             <div class="px-6 py-6">
@@ -89,7 +100,7 @@
                     <div class="bg-gray-50 rounded-lg p-4">
                         <div class="text-sm text-gray-500">Community</div>
                         <div class="text-lg font-semibold text-gray-900">
-                            {{ $user->followers()->count() }} followers
+                            {{ $user->followers()->count() }} {{ $user->followers()->count() === 1 ? 'follower' : 'followers' }}
                         </div>
                         <div class="text-xs text-gray-600 mt-1">
                             Following {{ $user->following()->count() }}
@@ -108,11 +119,29 @@
                 <div>
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Resources</h2>
                     <div class="space-y-3">
-                        @forelse($user->collections()->latest()->take(5)->get() as $collection)
+                        @php
+                            $collections = $user->collections()
+                                ->with('resources')
+                                ->latest()
+                                ->take(5)
+                                ->get()
+                                ->filter(function($collection) {
+                                    return $collection->resources->count() > 0;
+                                });
+                        @endphp
+                        
+                        @forelse($collections as $collection)
                             <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
                                 <div class="font-medium text-gray-900">{{ $collection->name }}</div>
                                 <div class="text-sm text-gray-600 mt-1">
-                                    {{ $collection->resources()->count() }} resources
+                                    {{ $collection->resources->count() }} {{ $collection->resources->count() === 1 ? 'resource' : 'resources' }}
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    @foreach($collection->resources->take(3) as $resource)
+                                        <a href="/resources/{{ $resource->id }}" class="block text-sm text-indigo-600 hover:text-indigo-800 hover:underline">
+                                            → {{ $resource->title }}
+                                        </a>
+                                    @endforeach
                                 </div>
                             </div>
                         @empty
