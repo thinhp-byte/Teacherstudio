@@ -35,22 +35,19 @@ class ResourceController extends Controller
 
     public function store()
     {
-         request()->validate([
-            'title'=>['required','min:3'],
-            'subject'=>'required',
-            'grade'=>'required'
-   ]);
+    request()->validate([
+        'title'=>['required','min:3'],
+        'subject'=>'required',
+        'grade'=>'required',
+        'collection_id'=>'required|exists:collections,id'
+    ]);
 
-   $collection = Auth::user()->collections()->firstOrCreate([
-    'name' => Auth::user()->name . "'s Collection"
-   ]);
-
-   $resource = Resource::create([
-    'collection_id'=> $collection->id,
-    'title'=>request('title'),
-    'subject'=>request('subject'),
-    'grade'=>request('grade')
-   ]);
+    $resource = Resource::create([
+        'collection_id'=> request('collection_id'),
+        'title'=>request('title'),
+        'subject'=>request('subject'),
+        'grade'=>request('grade')
+    ]);
    if ($resource->collection->user) {
         try {
             Mail::to($resource->collection->user)->queue(
