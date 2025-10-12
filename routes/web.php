@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FollowController;
 use App\Http\TeacherController;
+use App\Http\Controllers\TeacherProfileController;
 
 
 Route::get('test', function () {
@@ -34,6 +35,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('users.follow');
     Route::delete('/users/{user}/unfollow', [FollowController::class, 'destroy'])->name('users.unfollow');
+
+    Route::get('/profile/setup', [TeacherProfileController::class, 'create'])
+        ->name('profile.setup');
+    Route::post('/profile', [TeacherProfileController::class, 'store'])
+        ->name('profile.store');
+    Route::get('/profile/edit', [TeacherProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::patch('/profile', [TeacherProfileController::class, 'update'])
+        ->name('profile.update');
 });
 
 Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resources.show');
