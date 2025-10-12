@@ -9,7 +9,7 @@ use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FollowController;
-use App\Http\TeacherController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherProfileController;
 use App\Http\Controllers\CollectionController;
 
