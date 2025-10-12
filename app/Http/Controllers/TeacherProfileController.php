@@ -52,6 +52,8 @@ class TeacherProfileController extends Controller
         
         auth()->user()->teacherProfile()->update($validated);
         
-        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully!');
+        // Redirect to their profile page (not edit page)
+        return redirect('/profiles/' . auth()->id())
+            ->with('success', 'Profile updated successfully!');
     }
 }
