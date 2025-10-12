@@ -66,17 +66,20 @@
       </div>
       
       <div class="space-y-4">
-        @foreach(\App\Models\Resource::with('collection.user.teacherProfile')->latest()->take(3)->get() as $resource)
+        @foreach(\App\Models\Resource::with('collections.user.teacherProfile')->latest()->take(3)->get() as $resource)
           <a href="/resources/{{ $resource->id }}" class="block p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition">
             <div class="font-semibold text-gray-900">{{ $resource->title }}</div>
             <div class="text-sm text-gray-600 mt-1">
               {{ $resource->subject }} • {{ $resource->grade }}th grade
             </div>
-            @if($resource->collection->user)
-              <div class="text-xs text-gray-500 mt-2">
-                by {{ $resource->collection->user->name }}
-              </div>
-            @endif
+            @php
+  $firstCollection = $resource->collections->first();
+@endphp
+@if($firstCollection && $firstCollection->user)
+  <div class="text-xs text-gray-500 mt-2">
+    by {{ $firstCollection->user->name }}
+  </div>
+@endif
           </a>
         @endforeach
       </div>
