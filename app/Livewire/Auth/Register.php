@@ -24,7 +24,7 @@ class Register extends Component
     /**
      * Handle an incoming registration request.
      */
-    public function register(): void
+   public function register(): void
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -38,6 +38,7 @@ class Register extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('home', absolute: false), navigate: true);
+        // CHANGE THIS LINE:
+        $this->redirect(route('profile.setup', absolute: false), navigate: true);
     }
 }
