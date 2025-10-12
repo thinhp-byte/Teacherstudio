@@ -36,6 +36,16 @@
                 </div>
             </div>
 
+                 @auth
+            @if(auth()->id() === $user->id)
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <a href="{{ route('profile.edit') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        Edit My Profile
+                    </a>
+                </div>
+            @endif
+        @endauth
+
             <!-- Follow Button Section -->
             <div class="px-6 py-4 bg-white border-b border-gray-200">
                 <div class="flex items-center gap-3">
