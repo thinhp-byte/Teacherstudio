@@ -14,10 +14,13 @@
             @endguest
 
             @auth
-            <form method=POST action="/logout">
-                @csrf
-                <x-form-button>Log Out</x-form-button>
-            </form>
+                <span class="text-sm text-gray-700 mr-4">
+                Hello, <strong>{{ auth()->user()->name }}</strong>!
+                 </span>
+                 <form method="POST" action="/logout" class="inline">
+                    @csrf
+                    <x-form-button>Log Out</x-form-button>
+                 </form>
             @endauth
         </nav>
         
