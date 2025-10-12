@@ -33,9 +33,9 @@ class ResourceController extends Controller
     public function store()
     {
          request()->validate([
-    'title'=>['required','min:3'],
-    'subject'=>'required',
-    'grade'=>'required'
+            'title'=>['required','min:3'],
+            'subject'=>'required',
+            'grade'=>'required'
    ]);
 
    $collection = Auth::user()->collections()->firstOrCreate([
@@ -48,10 +48,17 @@ class ResourceController extends Controller
     'subject'=>request('subject'),
     'grade'=>request('grade')
    ]);
+   if ($resource->collection->user) {
+        try {
+            Mail::to($resource->collection->user)->queue(
+                new ResourcePosted($resource)
+            );
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Failed to send ResourcePosted email: ' . $e->getMessage());
+        }
+    }
 
-   Mail::to($resource->collection->user)->queue(
-    new ResourcePosted($resource)
-);
     return redirect('/resources');
     }
 
