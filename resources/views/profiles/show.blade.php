@@ -1,21 +1,35 @@
 <x-layout>
     <div class="max-w-4xl mx-auto">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-            <!-- Header Section -->
-            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-8">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <div class="h-20 w-20 rounded-full bg-white flex items-center justify-center text-3xl font-bold text-indigo-600">
-                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                        </div>
+            <!-- Header Section with Avatar -->
+            <div style="background: linear-gradient(to right, #6366f1, #a855f7); padding: 48px 24px;">
+                <div style="display: flex; align-items: center;">
+                    <!-- Avatar Circle -->
+                    <div style="
+                        height: 80px; 
+                        width: 80px; 
+                        border-radius: 50%; 
+                        background-color: white; 
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center; 
+                        font-size: 32px; 
+                        font-weight: bold; 
+                        color: #6366f1; 
+                        flex-shrink: 0;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    ">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
                     </div>
-                    <div class="ml-6">
-                        <h1 class="text-3xl font-bold text-white">{{ $user->name }}</h1>
+                    
+                    <!-- Name and School -->
+                    <div style="margin-left: 24px;">
+                        <h1 style="font-size: 30px; font-weight: bold; color: white; margin: 0;">
+                            {{ $user->name }}
+                        </h1>
                         @if($profile->school)
-                            <p class="text-indigo-100 mt-1">
-                                <span class="inline-flex items-center">
-                                    📚 {{ $profile->school }}
-                                </span>
+                            <p style="color: rgba(255,255,255,0.9); margin-top: 4px; display: flex; align-items: center;">
+                                <span>📚 {{ $profile->school }}</span>
                             </p>
                         @endif
                     </div>
