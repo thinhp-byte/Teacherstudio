@@ -4,21 +4,28 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Collection>
- */
+
 class CollectionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $subjects = [
+            'Mathematics',
+            'English', 
+            'Science',
+            'History',
+            'Art',
+            'Music',
+            'PE',
+            'Geography',
+            'Spanish',
+            'Computer Science'
+        ];
+        
         return [
-            'name' =>fake()->word(),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'name' => fake()->words(3, true) . ' Collection',
+            'subject' => fake()->randomElement($subjects),
         ];
     }
 }
