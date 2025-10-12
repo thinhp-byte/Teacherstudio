@@ -5,9 +5,11 @@
   <p>
     This is a {{$resource->subject}} resource for {{$resource['grade']}}th grade.
 </p >
-@can('edit', $resource)
-<p class="mt-6">
-  <x-button href="/resources/{{$resource->id}}/edit">Edit Resource</x-button>
-</p>
-@endcan
+@auth
+    @if($resource->canEditOrDelete(auth()->user()))
+          <p class="mt-6">
+            <x-button href="/resources/{{$resource->id}}/edit">Edit Resource</x-button>
+          </p>
+    @endif
+@endauth
 </x-layout>
