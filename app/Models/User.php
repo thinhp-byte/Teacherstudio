@@ -72,4 +72,48 @@ class User extends Authenticatable
     {
         return $this->email === 'admin@admin.com';
     }
+
+    /**
+ * Users that this user follows
+ */
+public function following()
+{
+    return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id')
+        ->withTimestamps();
+}
+
+/**
+ * Users that follow this user
+ */
+public function followers()
+{
+    return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id')
+        ->withTimestamps();
+}
+
+/**
+ * Check if this user follows another user
+ */
+public function isFollowing(User $user): bool
+{
+    return $this->following()->where('following_id', $user->id)->exists();
+}
+
+/**
+ * Follow a user
+ */
+public function follow(User $user): void
+{
+    if (!$this->isFollowing($user) && $this->id !== $user->id) {
+        $this->following()->attach($user->id);
+    }
+}
+
+/**
+ * Unfollow a user
+ */
+public function unfollow(User $user): void
+{
+    $this->following()->detach($user->id);
+}
 }
