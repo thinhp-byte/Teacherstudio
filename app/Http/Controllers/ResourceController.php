@@ -45,7 +45,7 @@ class ResourceController extends Controller
     'grade'=>request('grade')
    ]);
 
-   Mail::to($resource->collection->user)->send(
+   Mail::to($resource->collection->user)->queue(
     new ResourcePosted($resource)
 );
     return redirect('/resources');

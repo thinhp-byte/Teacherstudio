@@ -6,9 +6,16 @@ use App\Livewire\Settings\Profile;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Jobs\TranslateResource;
+use App\Models\Resource;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('test', function () {
+    $resource = Resource::first();
+    TranslateResource::dispatch($resource);
+    return 'It works!';
+});
 
 
 
