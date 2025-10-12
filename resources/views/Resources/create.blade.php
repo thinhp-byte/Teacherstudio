@@ -11,7 +11,31 @@
       <p class="mt-1 text-sm/6 text-gray-600">Provide details here below</p>
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <x-form-field>
+       
+      <x-form-field>
+          <x-form-label for="collection_id">Collection</x-form-label>
+          <div class="mt-2">
+            <select 
+              id="collection_id" 
+              name="collection_id" 
+              class="block w-full bg-white py-1.5 px-3 text-base text-gray-900 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              required
+            >
+              <option value="">Select a collection</option>
+              @foreach(auth()->user()->collections as $collection)
+                <option value="{{ $collection->id }}" {{ old('collection_id') == $collection->id ? 'selected' : '' }}>
+                  {{ $collection->name }} ({{ $collection->subject }})
+                </option>
+              @endforeach
+            </select>
+            <x-form-error name="collection_id"/>
+            <p class="text-xs text-gray-500 mt-1">
+              <a href="/collections/create" class="text-indigo-600 hover:text-indigo-800">Create a new collection</a>
+            </p>
+          </div>
+        </x-form-field>
+
+      <x-form-field>
           <x-form-label for="title">Title</x-form-label>
           <div class="mt-2">
             <x-form-input id="title" name="title" placeholder="Midterm" required/>
