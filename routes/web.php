@@ -9,6 +9,7 @@ use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FollowController;
+use App\Http\TeacherController;
 
 
 Route::get('test', function () {
@@ -61,6 +62,8 @@ Route::get('/profiles/{user}', function (User $user) {
         'profile' => $profile
     ]);
 })->name('profiles.show');
+
+Route::get('/teachers', [App\Http\Controllers\TeacherController::class, 'index'])->name('teachers.index');
 
 
 require __DIR__.'/auth.php';
