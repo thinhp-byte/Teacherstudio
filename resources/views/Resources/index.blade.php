@@ -6,6 +6,65 @@
     <p class="mt-2 text-gray-600">Discover and share educational resources from teachers worldwide</p>
   </div>
 
+  <form method="GET" action="/resources" class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Search by title or subject..." 
+                value="{{ request('search') }}"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            />
+        </div>
+        
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Grade Level</label>
+            <select 
+                name="grade" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            >
+                <option value="">All Grades</option>
+                @for($i = 1; $i <= 12; $i++)
+                    <option value="{{ $i }}" {{ request('grade') == $i ? 'selected' : '' }}>
+                        Grade {{ $i }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+        
+        <div class="flex items-end gap-2">
+            <button 
+                type="submit" 
+                class="flex-1 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold"
+            >
+                Search
+            </button>
+            @if(request('search') || request('grade'))
+                <a 
+                    href="/resources" 
+                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+                >
+                    Clear
+                </a>
+            @endif
+        </div>
+    </div>
+    
+    @if(request('search') || request('grade'))
+        <div class="mt-4 text-sm text-gray-600">
+            Showing results for:
+            @if(request('search'))
+                <span class="font-semibold">"{{ request('search') }}"</span>
+            @endif
+            @if(request('grade'))
+                <span class="font-semibold">Grade {{ request('grade') }}</span>
+            @endif
+        </div>
+    @endif
+  </form>
+
   <div class="mt-6 space-y-4">
    @foreach ($resources as $resource)
       <a href="/resources/{{ $resource->id }}" class="block px-4 py-6 border border-gray-200 rounded-lg hover:shadow-md transition bg-white">

@@ -11,16 +11,31 @@ use App\Mail\ResourcePosted;
 
 class ResourceController extends Controller
 {
-    public function index()
-{
-    $resources = Resource::with([
-        'collection.user.teacherProfile'
-    ])->latest()->simplePaginate(3);
-    
-    return view('resources.index', [
-        'resources' => $resources
-    ]);
-}
+    public function index(Request $request)
+    {
+        $query = Resource::with([
+            'collection.user.teacherProfile'
+        ]);
+        
+        // Search by title or subject
+        if ($search = $request->get('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('subject', 'like', "%{$search}%");
+            });
+        }
+        
+        // Filter by grade
+        if ($grade = $request->get('grade')) {
+            $query->where('grade', $grade);
+        }
+        
+        $resources = $query->latest()->simplePaginate(3);
+        
+        return view('resources.index', [
+            'resources' => $resources
+        ]);
+    }
     public function create()
     {
         return view('resources.create');
