@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResourcePosted;
+use App\Models\Collection;
 
 
 class ResourceController extends Controller
