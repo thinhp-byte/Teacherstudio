@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Collection::class, 'user_id');
     }
 
+    public function teacherProfile()
+    {
+        return $this->hasOne(TeacherProfile::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->email === 'admin@admin.com';
