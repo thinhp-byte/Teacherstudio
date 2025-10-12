@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FollowController;
 use App\Http\TeacherController;
 use App\Http\Controllers\TeacherProfileController;
+use App\Http\Controllers\CollectionController;
 
 
 Route::get('test', function () {
@@ -44,6 +45,15 @@ Route::middleware('auth')->group(function () {
         ->name('profile.edit');
     Route::patch('/profile', [TeacherProfileController::class, 'update'])
         ->name('profile.update');
+
+    Route::get('/collections', [CollectionController::class, 'index'])
+        ->name('collections.index');
+    Route::get('/collections/create', [CollectionController::class, 'create'])
+        ->name('collections.create');
+    Route::post('/collections', [CollectionController::class, 'store'])
+        ->name('collections.store');
+    Route::get('/collections/{id}', [CollectionController::class, 'show'])
+        ->name('collections.show');
 });
 
 Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resources.show');
