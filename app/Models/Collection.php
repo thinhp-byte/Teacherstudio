@@ -10,7 +10,7 @@ class Collection extends Model
     /** @use HasFactory<\Database\Factories\CollectionFactory> */
     use HasFactory;
     
-    protected $fillable = ['user_id', 'name'];
+    protected $fillable = ['user_id', 'name', 'subject'];
     
     public function resources(){
         return $this->hasMany(Resource::class);
