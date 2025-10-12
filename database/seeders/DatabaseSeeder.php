@@ -7,6 +7,7 @@ use App\Models\TeacherProfile;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Collection;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,6 +50,12 @@ class DatabaseSeeder extends Seeder
             ]);
         });
             
+         $allUsers = User::all();
+        foreach ($allUsers as $user) {
+        Collection::factory(rand(2, 4))->create([
+            'user_id' => $user->id
+        ]);
+        }
 
         $this->call([
             ResourceSeeder::class,
