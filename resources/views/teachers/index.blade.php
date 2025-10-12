@@ -5,30 +5,51 @@
         
         <div class="grid md:grid-cols-3 gap-6">
             @foreach($teachers as $teacher)
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
-                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-20"></div>
-                    <div class="p-6 -mt-10">
-                        <div class="h-20 w-20 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-indigo-600 border-4 border-white shadow-sm mb-4">
+                <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                    <!-- Colored Header -->
+                    <div style="background: linear-gradient(to right, #6366f1, #a855f7); height: 80px;"></div>
+                    
+                    <!-- Profile Content -->
+                    <div class="p-6" style="margin-top: -40px;">
+                        <!-- Avatar Circle -->
+                        <div style="
+                            height: 80px; 
+                            width: 80px; 
+                            border-radius: 50%; 
+                            background-color: white; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center; 
+                            font-size: 32px; 
+                            font-weight: bold; 
+                            color: #6366f1; 
+                            border: 4px solid white; 
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            margin-bottom: 16px;
+                        ">
                             {{ strtoupper(substr($teacher->name, 0, 1)) }}
                         </div>
                         
+                        <!-- Teacher Name -->
                         <h3 class="font-bold text-lg text-gray-900">{{ $teacher->name }}</h3>
                         
-                        @if($teacher->teacherProfile)
-                            @if($teacher->teacherProfile->school)
-                                <p class="text-sm text-gray-600 mt-1">{{ $teacher->teacherProfile->school }}</p>
-                            @endif
-                            
-                            @if($teacher->teacherProfile->specialization)
-                                <p class="text-xs text-gray-500 mt-2">{{ $teacher->teacherProfile->specialization }}</p>
-                            @endif
+                        <!-- School -->
+                        @if($teacher->teacherProfile && $teacher->teacherProfile->school)
+                            <p class="text-sm text-gray-600 mt-1">{{ $teacher->teacherProfile->school }}</p>
                         @endif
                         
+                        <!-- Specialization -->
+                        @if($teacher->teacherProfile && $teacher->teacherProfile->specialization)
+                            <p class="text-xs text-gray-500 mt-2">{{ $teacher->teacherProfile->specialization }}</p>
+                        @endif
+                        
+                        <!-- Stats -->
                         <div class="flex items-center gap-4 mt-4 text-sm text-gray-600">
                             <span>{{ $teacher->followers_count }} followers</span>
                             <span>{{ $teacher->collections_count }} collections</span>
                         </div>
                         
+                        <!-- Action Buttons -->
                         <div class="flex gap-2 mt-4">
                             <a href="/profiles/{{ $teacher->id }}" class="flex-1 text-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm">
                                 View Profile

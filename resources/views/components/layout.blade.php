@@ -13,7 +13,9 @@
     @endif
             <x-nav-link href="/">Home</x-nav-link>
             <x-nav-link href="/resources">Resource Hub</x-nav-link>
-            <x-nav-link href="/contact">Contact</x-nav-link>
+            <x-nav-link href="/teachers">Teachers</x-nav-link>  {{-- ADD THIS --}}
+            {{-- ... rest of nav --}}
+
             @guest
             <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
             <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
