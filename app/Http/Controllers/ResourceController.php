@@ -38,8 +38,12 @@ class ResourceController extends Controller
     'grade'=>'required'
    ]);
 
+   $collection = Auth::user()->collections()->firstOrCreate([
+    'name' => Auth::user()->name . "'s Collection"
+   ]);
+
    $resource = Resource::create([
-    'collection_id'=>1,
+    'collection_id'=> $collection->id,
     'title'=>request('title'),
     'subject'=>request('subject'),
     'grade'=>request('grade')
@@ -54,10 +58,7 @@ class ResourceController extends Controller
     public function edit(Resource $resource)
     {
         
-   
-        
-       
-    
+        Gate::authorize('edit-resource', $resource);
 
         return view('resources.edit', [
         'resource' => $resource
