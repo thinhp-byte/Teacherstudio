@@ -20,7 +20,7 @@ Route::get('test', function () {
 Route::view('/', 'home')->name('home');
 
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
-Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resources.show');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/resources/create', [ResourceController::class, 'create'])->name('resources.create');
@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->name('resources.update');
     Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->name('resources.destroy');
 });
+
+Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resources.show');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
