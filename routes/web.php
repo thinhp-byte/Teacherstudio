@@ -8,6 +8,7 @@ use App\Jobs\TranslateResource;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FollowController;
 
 
 Route::get('test', function () {
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/resources/{resource}/edit', [ResourceController::class, 'edit'])->name('resources.edit');
     Route::patch('/resources/{resource}', [ResourceController::class, 'update'])->name('resources.update');
     Route::delete('/resources/{resource}', [ResourceController::class, 'destroy'])->name('resources.destroy');
+
+    Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('users.follow');
+    Route::delete('/users/{user}/unfollow', [FollowController::class, 'destroy'])->name('users.unfollow');
 });
 
 Route::get('/resources/{resource}', [ResourceController::class, 'show'])->name('resources.show');
