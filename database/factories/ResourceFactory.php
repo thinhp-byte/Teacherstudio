@@ -17,40 +17,24 @@ class ResourceFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {
-        $usersWithProfiles = User::has('teacherProfile')->pluck('id');
-        
-
-        if ($usersWithProfiles->isEmpty()) {
-            throw new \Exception('No users with teacher profiles found. Run DatabaseSeeder first!');
-        }
+{
+    $subjects = [
+        'Mathematics', 
+        'English', 
+        'Science', 
+        'History', 
+        'Art', 
+        'Music', 
+        'PE', 
+        'Geography',
+        'Spanish',
+        'Computer Science'
+    ];
     
-
-        $userId = $usersWithProfiles->random();
-        
-        $collection = Collection::firstOrCreate(
-            ['user_id' => $userId],
-            ['name' => User::find($userId)->name . "'s Collection"]
-        );
-        
-        $subjects = [
-            'Mathematics', 
-            'English', 
-            'Science', 
-            'History', 
-            'Art', 
-            'Music', 
-            'PE', 
-            'Geography',
-            'Spanish',
-            'Computer Science'
-        ];
-        
-        return [
-            'collection_id' => $collection->id,
-            'title' => $this->faker->sentence(),
-            'subject' => $this->faker->randomElement($subjects),
-            'grade' => $this->faker->numberBetween(1, 12),
-        ];
-    }
+    return [
+        'title' => $this->faker->sentence(),
+        'subject' => $this->faker->randomElement($subjects),
+        'grade' => $this->faker->numberBetween(1, 12),
+    ];
+}
 }

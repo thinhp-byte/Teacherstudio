@@ -32,7 +32,7 @@ class CollectionController extends Controller
     public function show($id)
     {
         $collection = auth()->user()->collections()->findOrFail($id);
-        $resources = $collection->resources()->with('collection.user')->latest()->get();
+        $resources = $collection->resources()->with('collections.user')->latest()->get();
         
         return view('collections.show', compact('collection', 'resources'));
     }

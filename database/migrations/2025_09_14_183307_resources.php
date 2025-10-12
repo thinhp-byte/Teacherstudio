@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('resources', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIDfor(App\Models\Collection::class);
-            $table->string('title');
-            $table->string('subject');
-            $table->string('grade');
-            $table->timestamps();
-        });
+        $table->id();
+        $table->string('title');
+        $table->string('subject');
+        $table->string('grade');
+        $table->timestamps();
+    });
     }
 
     /**

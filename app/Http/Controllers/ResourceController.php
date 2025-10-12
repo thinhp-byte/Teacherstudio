@@ -12,30 +12,32 @@ use App\Mail\ResourcePosted;
 class ResourceController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Resource::with([
-            'collection.user.teacherProfile'
-        ]);
-        
-        // Search by title or subject
-        if ($search = $request->get('search')) {
-            $query->where(function($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                ->orWhere('subject', 'like', "%{$search}%");
-            });
-        }
-        
-        // Filter by grade
-        if ($grade = $request->get('grade')) {
-            $query->where('grade', $grade);
-        }
-        
-        $resources = $query->latest()->simplePaginate(3);
-        
-        return view('resources.index', [
-            'resources' => $resources
-        ]);
+{
+    $query = Resource::with([
+        'collections.user.teacherProfile'
+    ]);
+    
+    // Search by title or subject
+    if ($search = $request->get('search')) {
+        $query->where(function($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+            ->orWhere('subject', 'like', "%{$search}%");
+        });
     }
+    
+    // Filter by grade
+    if ($grade = $request->get('grade')) {
+        $query->where('grade', $grade);
+    }
+    
+    $resources = $query->latest()->simplePaginate(3);
+    
+    return view('resources.index', [
+        'resources' => $resources
+    ]);
+}
+
+
     public function create()
     {
         return view('resources.create');
@@ -49,7 +51,7 @@ class ResourceController extends Controller
     }   
 
     public function store()
-    {
+{
     request()->validate([
         'title'=>['required','min:3'],
         'subject'=>'required',
@@ -58,24 +60,28 @@ class ResourceController extends Controller
     ]);
 
     $resource = Resource::create([
-        'collection_id'=> request('collection_id'),
         'title'=>request('title'),
         'subject'=>request('subject'),
         'grade'=>request('grade')
     ]);
-   if ($resource->collection->user) {
+    
+    // Attach resource to the selected collection
+    $resource->collections()->attach(request('collection_id'));
+    
+    // Send email to collection owner
+    $collection = Collection::find(request('collection_id'));
+    if ($collection->user) {
         try {
-            Mail::to($resource->collection->user)->queue(
+            Mail::to($collection->user)->queue(
                 new ResourcePosted($resource)
             );
         } catch (\Exception $e) {
-            // Log the error or handle it as needed
             \Log::error('Failed to send ResourcePosted email: ' . $e->getMessage());
         }
     }
 
     return redirect('/resources');
-    }
+}
 
     public function edit(Resource $resource)
     {

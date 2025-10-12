@@ -13,7 +13,7 @@ class Collection extends Model
     protected $fillable = ['user_id', 'name', 'subject'];
     
     public function resources(){
-        return $this->hasMany(Resource::class);
+        return $this->belongsToMany(Resource::class);
     }
 
     public function user(){

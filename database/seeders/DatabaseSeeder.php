@@ -51,15 +51,33 @@ class DatabaseSeeder extends Seeder
         });
             
          $allUsers = User::all();
-        foreach ($allUsers as $user) {
-        Collection::factory(rand(2, 4))->create([
-            'user_id' => $user->id
-        ]);
-        }
+foreach ($allUsers as $user) {
+    Collection::factory(rand(2, 4))->create([
+        'user_id' => $user->id
+    ]);
+}
 
-        $this->call([
-            ResourceSeeder::class,
-        ]);
+// Create resources and attach them to collections
+$allUsers = User::all();
+foreach ($allUsers as $user) {
+    $userCollections = $user->collections;
+    
+    // Skip if user has no collections
+    if ($userCollections->isEmpty()) {
+        continue;
+    }
+    
+    // Create 3-8 resources per user
+    $resourceCount = rand(3, 8);
+    
+    for ($i = 0; $i < $resourceCount; $i++) {
+        $resource = \App\Models\Resource::factory()->create();
+        
+        // Attach resource to 1-3 random collections owned by this user
+        $collectionsToAttach = $userCollections->random(min(rand(1, 3), $userCollections->count()));
+        $resource->collections()->attach($collectionsToAttach->pluck('id'));
+    }
+}
 
         // sample follows
         $allUsers = User::all();
