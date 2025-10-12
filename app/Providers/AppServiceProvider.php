@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('edit-resource', function ($user, $resource) {
-            return $resource->collection->user->is($user);
+            return $resource->canEditOrDelete($user);
         });
     }
 }
