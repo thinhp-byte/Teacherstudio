@@ -33,11 +33,10 @@
                         <span class="text-sm text-gray-700">
                             Hello, <strong>{{ auth()->user()->name }}</strong>!
                         </span>
+                        <<x-nav-link href="/profile/edit" :active="request()->is('profile/edit')">My Profile</x-nav-link>
                         <form method="POST" action="/logout" class="inline">
                             @csrf
-                            <button type="submit" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                                Log Out
-                            </button>
+                            <x-form-button>Log Out</x-form-button>
                         </form>
                     @endauth
                 </div>
