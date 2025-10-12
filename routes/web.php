@@ -6,6 +6,7 @@ use App\Livewire\Settings\Profile;
 use App\Http\Controllers\ResourceController;
 use App\Jobs\TranslateResource;
 use App\Models\Resource;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,5 +44,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
+
+Route::get('/profiles/{user}', function (User $user) {
+    $profile = $user->teacherProfile;
+    
+    if (!$profile) {
+        abort(404, 'Teacher profile not found');
+    }
+    
+    return view('profiles.show', [
+        'user' => $user,
+        'profile' => $profile
+    ]);
+})->name('profiles.show');
+
 
 require __DIR__.'/auth.php';
