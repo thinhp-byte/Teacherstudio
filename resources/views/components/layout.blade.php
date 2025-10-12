@@ -11,10 +11,11 @@
             <span class="block sm:inline">{{ session('success') }}</span>
         </div>
     @endif
+    
+        <nav class="mb-8">
             <x-nav-link href="/">Home</x-nav-link>
             <x-nav-link href="/resources">Resource Hub</x-nav-link>
-            <x-nav-link href="/teachers">Teachers</x-nav-link>  {{-- ADD THIS --}}
-            {{-- ... rest of nav --}}
+            <x-nav-link href="/teachers">Teachers</x-nav-link>
 
             @guest
             <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
@@ -36,9 +37,9 @@
             <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8 flex sm:flex sm:justify-between">
                 <h1 class="text-3xl font-bold mb-8"> Teacherstudio </h1>
                 
-                {{-- Only show Create Resource button on specific pages --}}
+                {{-- Only show Create Resource button on home and resources index pages --}}
                 @auth
-                    @if(request()->is('/') || request()->is('resources') || request()->is('resources/*'))
+                    @if(request()->is('/') || request()->is('resources'))
                         <x-button href="/resources/create">Create Resource</x-button>
                     @endif
                 @endauth
