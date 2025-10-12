@@ -12,8 +12,11 @@ use App\Mail\ResourcePosted;
 class ResourceController extends Controller
 {
     public function index()
-    {
-         $resources=Resource::with("collection")->latest()->simplepaginate(3);
+{
+    $resources = Resource::with([
+        'collection.user.teacherProfile'
+    ])->latest()->simplePaginate(3);
+    
     return view('resources.index', [
         'resources' => $resources
     ]);
