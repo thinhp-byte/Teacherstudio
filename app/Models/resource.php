@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class resource extends Model{
+class Resource extends Model{
     use HasFactory;
  
     protected $fillable = ['collection_id', 'title', 'subject', 'grade'];
@@ -16,5 +16,15 @@ class resource extends Model{
 
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+
+   public function canEditOrDelete(\App\Models\User $user): bool
+    {
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+        
+        return $this->collection->user_id === $user->id;
     }
 }
