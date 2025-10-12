@@ -14,10 +14,6 @@ class Resource extends Model{
         return $this->belongsTo(Collection::class);
     }
 
-    public function tags(){
-        return $this->belongsToMany(Tag::class);
-    }
-
    public function canEditOrDelete(\App\Models\User $user): bool
     {
 
