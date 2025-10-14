@@ -12,7 +12,7 @@ class TeacherController extends Controller
         $teachers = User::has('teacherProfile')
             ->with('teacherProfile')
             ->withCount(['followers', 'collections'])
-            ->latest()
+            ->orderBy('name')
             ->paginate(12);
             
         return view('teachers.index', [

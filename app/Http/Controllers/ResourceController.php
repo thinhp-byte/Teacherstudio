@@ -100,7 +100,7 @@ class ResourceController extends Controller
         request()->validate([
     'title'=>['required','min:3'],
     'subject'=>'required',
-    'grade'=>'required'
+    'grade'=>['required', "numeric", 'between:1,12']
    ]);
 
     $resource->update([
@@ -114,6 +114,8 @@ class ResourceController extends Controller
     public function destroy(Resource $resource)
     {
         Gate::authorize('edit-resource', $resource);
+
+        
         $resource->delete();
     return redirect('/resources');
     }
